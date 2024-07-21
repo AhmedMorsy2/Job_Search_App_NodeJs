@@ -18,6 +18,7 @@ import {
 } from "../../Middlewares/job.middleware.js";
 import { validations } from "../../utils/validation.js";
 import { applyVal, jobVal } from "./job.validation.js";
+import { uploadSingleFile } from "../../FileUpload/fileUpload.js";
 
 const jobRouter = Router();
 jobRouter.use(checkToken);
@@ -55,7 +56,13 @@ jobRouter.get("/company/:companyName", findComp, compJobs);
  * @param {object} req.body - The application details including jobId and user skills.
  * @returns {object} 200 - An object containing success message and details of the applied job.
  */
-jobRouter.post("/apply", validations(applyVal), apply, applyJob);
+jobRouter.post(
+  "/apply",
+  uploadSingleFile("resume", "resumes"),
+  validations(applyVal),
+  apply,
+  applyJob
+);
 
 jobRouter.use(checkRole);
 jobRouter.use(checkOwner);
