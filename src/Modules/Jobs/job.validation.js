@@ -34,5 +34,15 @@ const applyVal = Joi.object({
   jobId: Joi.string().required(),
   userId: Joi.string(),
   userTechSkills: Joi.required(),
+  resume: Joi.object({
+    fieldname: Joi.string().required(),
+    originalname: Joi.string().required(),
+    encoding: Joi.string().required(),
+    mimetype: Joi.string().valid("application/pdf").required(),
+    size: Joi.number().max(5242880).required(),
+    destination: Joi.string().required(),
+    filename: Joi.string().required(),
+    path: Joi.string().required(),
+  }).required(),
 });
 export { jobVal, applyVal };
